@@ -17,7 +17,7 @@ Current Features:
 * A UI that supports saving and loading designs along with undo and redo
 
 Planned Features:
-* Erosive burning simulation
+* Erosive burning simulation - The subject of this branch
 * Detailed output of every calculated parameter at any time and position along the motor
 * Tapered-core grains
 
