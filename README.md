@@ -33,12 +33,19 @@ Building from Source
 --------------------
 The program is currently being developed using python 3.8. The dependencies are outlined in `requirements.txt`, the main ones include `PyQt5`, `matplot`, `numpy`, `scipy`, `scikit-fmm`, and `scikit-image`. Because the PyQt5 bindings are used for the GUI, Qt5 must also be installed.
 
-The easiest way to build/run from source code is to clone the repository and install the required dependencies into a virtual enviornment:
+The easiest way to build/run from source code is to clone the repository and install the required dependencies into a virtual environment:
 ```
+[LINUX]
 $ git clone https://github.com/reilleya/openMotor
 $ cd openMotor
 $ python3 -m venv .venv
 $ source .venv/bin/activate
+$ pip install -r requirements.txt
+```
+[Windows Powershell]
+Open powershell prompt in main folder once cloned
+$ py -m venv .venv
+$ .venv/scripts/activate
 $ pip install -r requirements.txt
 ```
 If you are using a version of python that does not have a prebuilt version of one of the dependencies, the `pip` command above might fail with an error like:
