@@ -42,6 +42,7 @@ $ python3 -m venv .venv
 $ source .venv/bin/activate
 $ pip install -r requirements.txt
 ```
+```
 [Windows Powershell]
 Open powershell prompt in main folder once cloned
 $ py -m venv .venv
