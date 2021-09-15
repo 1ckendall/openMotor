@@ -73,7 +73,7 @@ Data Files
 -----------
 openMotor uses [YAML](https://en.wikipedia.org/wiki/YAML) for data storage. Motor files have the extension `.ric` to differentiate them, but internally they are YAML and can be edited in a text editor if desired. The recommended MIME type for these files is `application/vnd.openmotor+yaml`.
 
-The remaining user information, like propellant data and preferences, is stored in plain YAML files in `<AppData>\Local\openMotor` on Windows, `/Users/<username>/Library/Application Support/openMotor` on Mac OS, and `/home/<username>/.local/share/openMotor` on Linux.
+The remaining user information, like propellant data and preferences, is stored in plain YAML files in ~~`<AppData>\Local\openMotor` on Windows, `/Users/<username>/Library/Application Support/openMotor` on Mac OS, and `/home/<username>/.local/share/openMotor` on Linux.~~ I can't find it there! Found mine under `local/packages/PythonSoftwareFoundation.blahblahblah/LocalCache/Local/OpenMotor/OpenMotor on Win 10. 
 
 License
 -------
