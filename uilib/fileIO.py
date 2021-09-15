@@ -5,6 +5,7 @@ import platform
 from PyQt5.QtWidgets import QApplication
 import yaml
 import appdirs
+from platform import system
 
 from .defaults import DEFAULT_PREFERENCES, DEFAULT_PROPELLANTS, KNSU_PROPS
 from .logger import logger
@@ -65,7 +66,15 @@ def getConfigPath():
     return path + '/'
 
 def getStoragePath():
-    path = os.path.expanduser('~/Documents/OpenMotor_Data')
+    sys = system()
+    if sys == 'Windows':
+        path = os.path.expanduser('~/Documents/OpenMotor_Data')
+    elif sys == 'Linux':
+        path = os.path.expanduser('~/OpenMotor_Data')
+    elif sys == 'Darwin':
+        path = os.path.expanduser('~/Documents/OpenMotor_Data')
+    else:
+        path = path = os.path.expanduser('~/OpenMotor_Data')
     if not os.path.isdir(path): # Create directory if it doesn't exist
         os.mkdir(path)
     return path + '/'
