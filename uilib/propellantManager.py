@@ -3,7 +3,7 @@ from PyQt5.QtCore import QObject, pyqtSignal
 import motorlib
 
 from .defaults import DEFAULT_PROPELLANTS
-from .fileIO import loadFile, saveFile, fileTypes, getConfigPath
+from .fileIO import loadFile, saveFile, fileTypes, getStoragePath
 from .widgets.propellantMenu import PropellantMenu
 from .logger import logger
 
@@ -21,7 +21,7 @@ class PropellantManager(QObject):
 
     def loadPropellants(self):
         try:
-            propList = loadFile(getConfigPath() + 'propellants.yaml', fileTypes.PROPELLANTS)
+            propList = loadFile(getStoragePath() + 'propellants.yaml', fileTypes.PROPELLANTS)
             for propDict in propList:
                 newProp = motorlib.propellant.Propellant()
                 newProp.setProperties(propDict)
@@ -34,8 +34,8 @@ class PropellantManager(QObject):
     def savePropellants(self):
         propellants = [prop.getProperties() for prop in self.propellants]
         try:
-            logger.log('Saving propellants to "{}"'.format(getConfigPath() + 'propellants.yaml'))
-            saveFile(getConfigPath() + 'propellants.yaml', propellants, fileTypes.PROPELLANTS)
+            logger.log('Saving propellants to "{}"'.format(getStoragePath() + 'propellants.yaml'))
+            saveFile(getStoragePath() + 'propellants.yaml', propellants, fileTypes.PROPELLANTS)
         except:
             logger.warn('Unable to save propellants!')
 

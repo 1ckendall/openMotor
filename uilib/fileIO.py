@@ -64,6 +64,12 @@ def getConfigPath():
         os.mkdir(path)
     return path + '/'
 
+def getStoragePath():
+    path = os.path.expanduser('~/Documents/OpenMotor_Data')
+    if not os.path.isdir(path): # Create directory if it doesn't exist
+        os.mkdir(path)
+    return path + '/'
+
 def passthrough(data):
     return data
 
