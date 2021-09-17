@@ -4,7 +4,7 @@ from motorlib.properties import PropertyCollection, FloatProperty, IntProperty, 
 from motorlib.units import unitLabels, getAllConversions
 from motorlib.motor import MotorConfig
 
-from .fileIO import loadFile, saveFile, getConfigPath, fileTypes
+from .fileIO import loadFile, saveFile, getStoragePath, fileTypes
 from .defaults import DEFAULT_PREFERENCES
 from .widgets import preferencesMenu
 from .logger import logger
@@ -55,7 +55,7 @@ class PreferencesManager(QObject):
 
     def loadPreferences(self):
         try:
-            prefDict = loadFile(getConfigPath() + 'preferences.yaml', fileTypes.PREFERENCES)
+            prefDict = loadFile(getStoragePath() + 'preferences.yaml', fileTypes.PREFERENCES)
             self.preferences.applyDict(prefDict)
             self.publishPreferences()
         except FileNotFoundError:
@@ -64,8 +64,8 @@ class PreferencesManager(QObject):
 
     def savePreferences(self):
         try:
-            logger.log('Saving preferences to "{}"'.format(getConfigPath() + 'preferences.yaml'))
-            saveFile(getConfigPath() + 'preferences.yaml', self.preferences.getDict(), fileTypes.PREFERENCES)
+            logger.log('Saving preferences to "{}"'.format(getStoragePath() + 'preferences.yaml'))
+            saveFile(getStoragePath() + 'preferences.yaml', self.preferences.getDict(), fileTypes.PREFERENCES)
         except:
             logger.warn('Unable to save preferences')
 
