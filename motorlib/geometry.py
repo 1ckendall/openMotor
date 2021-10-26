@@ -27,6 +27,26 @@ def cylinderVolume(dia, height):
     """Returns the volume of a cylinder with diameter 'dia' and height 'height'"""
     return height * circleArea(dia)
 
+def frustumLateralSurfaceArea(diameterA, diameterB, length):
+    """Returns the surface area of a frustum (truncated cone) with end diameters A and B and length 'length'"""
+    radiusA = diameterA / 2
+    radiusB = diameterB / 2
+    return math.pi * (radiusA + radiusB) * (abs(radiusA - radiusB) ** 2 + length ** 2) ** 0.5
+
+def frustumVolume(diameterA, diameterB, length):
+    """Returns the volume of a frustum (truncated cone) with end diameters A and B and length 'length'"""
+    radiusA = diameterA / 2
+    radiusB = diameterB / 2
+    return math.pi * (length / 3) * (radiusA ** 2 + radiusA * radiusB + radiusB ** 2)
+
+def splitFrustum(diameterA, diameterB, length, splitPosition):
+    """Takes in info about a frustum (truncated cone) and a position measured from the "diameterA" and returns
+    a tuple of frustums representing the two halves of the original frustum if it were split on the plane at
+    distance "position" from the face with diameter "diameterA"
+    """
+    splitDiameter = diameterA + (diameterB - diameterA) * (splitPosition / length)
+    return (diameterA, splitDiameter, splitPosition), (splitDiameter, diameterB, length - splitPosition)
+
 def length(contour, mapSize, tolerance=3):
     """Returns the total length of all segments in a contour that aren't within 'tolerance' of the edge of a
     circle with diameter 'mapSize'"""

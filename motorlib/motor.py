@@ -68,15 +68,18 @@ class Motor():
             self.grains[-1].setProperties(entry['properties'])
         self.config.setProperties(dictionary['config'])
 
-    def calcKN(self, regDepth, dThroat):
-        """Returns the motor's Kn when it has each grain has regressed by its value in regDepth, which should be a list
-        with the same number of elements as there are grains in the motor."""
+    def calcBurningSurfaceArea(self, regDepth):
         burnoutThres = self.config.getProperty('burnoutWebThres')
         gWithReg = zip(self.grains, regDepth)
         perGrain = [gr.getSurfaceAreaAtRegression(reg) * int(gr.isWebLeft(reg, burnoutThres)) for gr, reg in gWithReg]
-        surfArea = sum(perGrain)
-        nozz = self.nozzle.getThroatArea(dThroat)
-        return surfArea / nozz
+        return sum(perGrain)
+
+    def calcKN(self, regDepth, dThroat):
+        """Returns the motor's Kn when it has each grain has regressed by its value in regDepth, which should be a list
+        with the same number of elements as there are grains in the motor."""
+        burningSurfaceArea = self.calcBurningSurfaceArea(regDepth)
+        nozzleArea = self.nozzle.getThroatArea(dThroat)
+        return burningSurfaceArea / nozzleArea
 
     def calcIdealPressure(self, regDepth, dThroat, kn=None):
         """Returns the steady-state pressure of the motor at a given reg. Kn is calculated automatically, but it can
@@ -145,9 +148,9 @@ class Motor():
         for gid, grain in enumerate(self.grains):
             if isinstance(grain, EndBurningGrain) and gid != 0: # Endburners have to be at the foward end
                 aText = 'End burning grains must be the forward-most grain in the motor'
-                simRes.addAlert(SimAlert(SimAlertLevel.ERROR, SimAlertType.CONSTRAINT, aText, 'Grain ' + str(gid + 1)))
+                simRes.addAlert(SimAlert(SimAlertLevel.ERROR, SimAlertType.CONSTRAINT, aText, 'Grain {}'.format(gid + 1)))
             for alert in grain.getGeometryErrors():
-                alert.location = 'Grain ' + str(gid + 1)
+                alert.location = 'Grain {}'.format(gid + 1)
                 simRes.addAlert(alert)
         for alert in self.nozzle.getGeometryErrors():
             simRes.addAlert(alert)
@@ -197,8 +200,8 @@ class Motor():
             minAllowed = self.config.getProperty('minPortThroat')
             ratio = aftPort / geometry.circleArea(self.nozzle.props['throat'].getValue())
             if ratio < minAllowed:
-                desc = 'Initial port/throat ratio of ' + str(round(ratio, 3)) + ' was less than ' + str(minAllowed)
-                simRes.addAlert(SimAlert(SimAlertLevel.WARNING, SimAlertType.CONSTRAINT, desc, 'N/A'))
+                description = 'Initial port/throat ratio of {:.3f} was less than {:.3f}'.format(ratio, minAllowed)
+                simRes.addAlert(SimAlert(SimAlertLevel.WARNING, SimAlertType.CONSTRAINT, description, 'N/A'))
 
         # Perform timesteps
         while simRes.shouldContinueSim(burnoutThrustThres):

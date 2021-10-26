@@ -19,7 +19,6 @@ Current Features:
 Planned Features:
 * Erosive burning simulation - The subject of this branch
 * Detailed output of every calculated parameter at any time and position along the motor
-* Tapered-core grains
 
 The calculations involved were sourced from Rocket Propulsion Elements by George Sutton and from [Richard Nakka's website](https://www.nakka-rocketry.net/rtheory.html).
 
